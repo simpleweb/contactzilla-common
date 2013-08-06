@@ -1,0 +1,12 @@
+{
+    "name": "cloudmanaged/contactzilla-model",
+    "description": "Contactzilla Mongo model",
+    "require": {
+        "coen-hyde/shanty-mongo": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "": ""
+        }
+    }
+}
