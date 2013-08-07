@@ -1,12 +1,23 @@
 {
     "name": "cloudmanaged/contactzilla-model",
     "description": "Contactzilla Mongo model",
+    "authors": [
+        {
+            "name": "Steve Lacey",
+            "homepage": "http://stevelacey.net"
+        },
+        {
+            "name": "Tom Holder",
+            "homepage": "http://simpleweb.co.uk"
+        }
+    ],
     "require": {
+        "php": ">=5.3",
         "coen-hyde/shanty-mongo": "dev-master"
     },
     "autoload": {
         "psr-0": {
-            "": ""
+            "Model": "library/"
         }
     }
 }
