@@ -1,8 +1,8 @@
 {
-    "name": "cloudmanaged/contactzilla-common",
+    "name": "contactzilla/common",
     "description": "Contactzilla Common",
-    "keywords": ["contactzilla", "guzzle", "http", "monolog", "request", "sabre", "zend"],
     "homepage": "https://github.com/CloudManaged/contactzilla-common",
+    "keywords": ["contactzilla", "guzzle", "http", "monolog", "request", "sabre", "zend"],
     "license": "MIT",
     "authors": [
         {
