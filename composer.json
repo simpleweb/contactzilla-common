@@ -1,7 +1,6 @@
 {
     "name": "cloudmanaged/contactzilla-common",
     "description": "Contactzilla Common",
-    "version": "0.1.0",
     "keywords": ["contactzilla", "guzzle", "http", "monolog", "request", "sabre", "zend"],
     "homepage": "https://github.com/CloudManaged/contactzilla-common",
     "license": "MIT",
