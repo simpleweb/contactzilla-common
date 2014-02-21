@@ -1,0 +1,26 @@
+{
+    "name": "cloudmanaged/contactzilla-common",
+    "description": "Contactzilla Common",
+    "version": "0.1.0",
+    "keywords": ["contactzilla", "guzzle", "http", "monolog", "request", "sabre", "zend"],
+    "homepage": "https://github.com/CloudManaged/contactzilla-common",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Steve Lacey",
+            "homepage": "http://stevelacey.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.4"
+    },
+    "require-dev": {
+        "d11wtq/boris": "~1.0",
+        "phpspec/phpspec": "2.0.0-RC3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Contactzilla\\Common\\": "src"
+        }
+    }
+}
