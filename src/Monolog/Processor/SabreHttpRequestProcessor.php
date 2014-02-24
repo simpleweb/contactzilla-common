@@ -2,17 +2,17 @@
 
 namespace Contactzilla\Common\Monolog\Processor;
 
-use Guzzle;
+use Sabre;
 
 /**
- * A monolog processor for processing Guzzle\HTTP\Message\Requests
+ * A monolog processor for processing Sabre\HTTP\Requests
  *
  * @author Steve Lacey <steve@simpleweb.co.uk>
  */
-class GuzzleHTTPRequestProcessor extends AbstractRequestProcessor
+class SabreHttpRequestProcessor extends AbstractRequestProcessor
 {
-    const REQUEST_CLASS = 'Guzzle\HTTP\Message\Request';
-    const RESPONSE_CLASS = 'Guzzle\HTTP\Message\Response';
+    const REQUEST_CLASS = 'Sabre\HTTP\Request';
+    const RESPONSE_CLASS = 'Sabre\HTTP\Response';
 
     /**
      * A set of params we'll need to build the message
@@ -21,13 +21,13 @@ class GuzzleHTTPRequestProcessor extends AbstractRequestProcessor
      *
      * @return array
      */
-    protected function message(Guzzle\HTTP\Message\Request $request, Guzzle\HTTP\Message\Response $response)
+    protected function message(Sabre\HTTP\Request $request, Sabre\HTTP\Response $response)
     {
         return [
             $request->getMethod(),
             $request->getUrl(),
-            'HTTP/' . $request->getProtocolVersion(),
-            $response->getStatusCode(),
+            'HTTP/' . $request->getHTTPVersion(),
+            $response->getStatus(),
             $response->getHeader('content-length') ?: '-'
         ];
     }
@@ -37,19 +37,19 @@ class GuzzleHTTPRequestProcessor extends AbstractRequestProcessor
      *
      * @return array
      */
-    protected function extra(Guzzle\HTTP\Message\Request $request, Guzzle\HTTP\Message\Response $response)
+    protected function extra(Sabre\HTTP\Request $request, Sabre\HTTP\Response $response)
     {
         return [
-            'request' => $request instanceOf Guzzle\HTTP\Message\EntityEnclosingRequestInterface ? $request->getPostFields()->toArray() ?: $request->getBody() : null,
+            'request' => $request->getBody(),
             'request_content_length' => $request->getHeader('content-length') ?: '-',
             'request_headers' => $request->getHeaders(),
             'request_method' => $request->getMethod(),
             'request_url' => $request->getUrl(),
 
-            'response' => $response->getBody(true),
+            'response' => $response->getBody(),
             'response_content_length' => $response->getHeader('content-length') ?: '-',
             'response_headers' => $response->getHeaders(),
-            'response_status' => $response->getStatusCode()
+            'response_status' => $response->getStatus()
         ];
     }
 }

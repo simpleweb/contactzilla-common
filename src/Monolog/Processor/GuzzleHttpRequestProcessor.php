@@ -2,22 +2,17 @@
 
 namespace Contactzilla\Common\Monolog\Processor;
 
-use Contactzilla,
-    Zend_HTTP_Response;
+use Guzzle;
 
 /**
- * A monolog processor for processing Contactzilla\Zend\HTTP\Client requests
+ * A monolog processor for processing Guzzle\HTTP\Message\Requests
  *
  * @author Steve Lacey <steve@simpleweb.co.uk>
  */
-class ZendHTTPRequestProcessor extends AbstractRequestProcessor
+class GuzzleHttpRequestProcessor extends AbstractRequestProcessor
 {
-    /**
-     * Zend_Http_Client is kind of request like, except that it doesn't
-     * give visibility to the method or headers... useful
-     */
-    const REQUEST_CLASS = 'Contactzilla\Zend\HTTP\Client';
-    const RESPONSE_CLASS = 'Zend_HTTP_Response';
+    const REQUEST_CLASS = 'Guzzle\HTTP\Message\Request';
+    const RESPONSE_CLASS = 'Guzzle\HTTP\Message\Response';
 
     /**
      * A set of params we'll need to build the message
@@ -26,13 +21,13 @@ class ZendHTTPRequestProcessor extends AbstractRequestProcessor
      *
      * @return array
      */
-    protected function message(Contactzilla\Zend\HTTP\Client $request, Zend_HTTP_Response $response)
+    protected function message(Guzzle\HTTP\Message\Request $request, Guzzle\HTTP\Message\Response $response)
     {
         return [
             $request->getMethod(),
             $request->getUrl(),
-            'HTTP/1.1',
-            $response->getStatus(),
+            'HTTP/' . $request->getProtocolVersion(),
+            $response->getStatusCode(),
             $response->getHeader('content-length') ?: '-'
         ];
     }
@@ -42,19 +37,19 @@ class ZendHTTPRequestProcessor extends AbstractRequestProcessor
      *
      * @return array
      */
-    protected function extra(Contactzilla\Zend\HTTP\Client $request, Zend_HTTP_Response $response)
+    protected function extra(Guzzle\HTTP\Message\Request $request, Guzzle\HTTP\Message\Response $response)
     {
         return [
-            'request' => $request->getBody(),
+            'request' => $request instanceOf Guzzle\HTTP\Message\EntityEnclosingRequestInterface ? $request->getPostFields()->toArray() ?: $request->getBody() : null,
             'request_content_length' => $request->getHeader('content-length') ?: '-',
             'request_headers' => $request->getHeaders(),
             'request_method' => $request->getMethod(),
             'request_url' => $request->getUrl(),
 
-            'response' => $response->getBody(),
+            'response' => $response->getBody(true),
             'response_content_length' => $response->getHeader('content-length') ?: '-',
             'response_headers' => $response->getHeaders(),
-            'response_status' => $response->getStatus()
+            'response_status' => $response->getStatusCode()
         ];
     }
 }

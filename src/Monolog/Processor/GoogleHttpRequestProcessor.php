@@ -9,7 +9,7 @@ use Google_Http_Request;
  *
  * @author Steve Lacey <steve@simpleweb.co.uk>
  */
-class GoogleHTTPRequestProcessor extends AbstractRequestProcessor
+class GoogleHttpRequestProcessor extends AbstractRequestProcessor
 {
     const REQUEST_CLASS = 'Google_Http_Request';
     const RESPONSE_CLASS = 'Google_Http_Request'; // yeah, Google are smart

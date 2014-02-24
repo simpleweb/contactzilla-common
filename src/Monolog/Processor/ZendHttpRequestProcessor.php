@@ -2,17 +2,22 @@
 
 namespace Contactzilla\Common\Monolog\Processor;
 
-use Sabre;
+use Contactzilla,
+    Zend_HTTP_Response;
 
 /**
- * A monolog processor for processing Sabre\HTTP\Requests
+ * A monolog processor for processing Contactzilla\Zend\HTTP\Client requests
  *
  * @author Steve Lacey <steve@simpleweb.co.uk>
  */
-class SabreHTTPRequestProcessor extends AbstractRequestProcessor
+class ZendHttpRequestProcessor extends AbstractRequestProcessor
 {
-    const REQUEST_CLASS = 'Sabre\HTTP\Request';
-    const RESPONSE_CLASS = 'Sabre\HTTP\Response';
+    /**
+     * Zend_Http_Client is kind of request like, except that it doesn't
+     * give visibility to the method or headers... useful
+     */
+    const REQUEST_CLASS = 'Contactzilla\Zend\HTTP\Client';
+    const RESPONSE_CLASS = 'Zend_HTTP_Response';
 
     /**
      * A set of params we'll need to build the message
@@ -21,12 +26,12 @@ class SabreHTTPRequestProcessor extends AbstractRequestProcessor
      *
      * @return array
      */
-    protected function message(Sabre\HTTP\Request $request, Sabre\HTTP\Response $response)
+    protected function message(Contactzilla\Zend\HTTP\Client $request, Zend_HTTP_Response $response)
     {
         return [
             $request->getMethod(),
             $request->getUrl(),
-            'HTTP/' . $request->getHTTPVersion(),
+            'HTTP/1.1',
             $response->getStatus(),
             $response->getHeader('content-length') ?: '-'
         ];
@@ -37,7 +42,7 @@ class SabreHTTPRequestProcessor extends AbstractRequestProcessor
      *
      * @return array
      */
-    protected function extra(Sabre\HTTP\Request $request, Sabre\HTTP\Response $response)
+    protected function extra(Contactzilla\Zend\HTTP\Client $request, Zend_HTTP_Response $response)
     {
         return [
             'request' => $request->getBody(),
