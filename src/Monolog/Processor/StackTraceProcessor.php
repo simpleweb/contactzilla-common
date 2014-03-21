@@ -11,7 +11,7 @@ class StackTraceProcessor
 {
     public function __invoke(array $record)
     {
-        $record['extra']['stack_trace'] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5);
+        $record['extra']['stack_trace'] = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10);
 
         return $record;
     }
